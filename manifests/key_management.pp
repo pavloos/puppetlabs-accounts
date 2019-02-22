@@ -19,6 +19,9 @@
 # @param sshkey_custom_path
 #   Path to custom file for ssh key management.
 #
+# @param sshkey_custom_path_mode
+#   Specifies the mode of the sshkey file in custom location.
+#
 # @api private
 #
 define accounts::key_management(
@@ -41,8 +44,10 @@ define accounts::key_management(
 
   if $sshkey_custom_path {
     $key_file = $sshkey_custom_path
+    $key_mode = $sshkey_custom_path_mode
   } elsif $user_home {
     $key_file = "${user_home}/.ssh/authorized_keys"
+    $key_mode = '0600'
   } else {
     err(translate('Either user_home or sshkey_custom_path must be specified'))
   }
@@ -51,7 +56,7 @@ define accounts::key_management(
     ensure => file,
     owner  => $user,
     group  => $group,
-    mode   => '0600',
+    mode   => $key_mode,
   }
 
   if $sshkeys != [] {

@@ -136,6 +136,10 @@
 # @param sshkey_custom_path
 #   Custom location for ssh public key file.
 #
+# @param sshkey_custom_path_mode
+#   Specifies the mode of the sshkey file in custom location.
+#
+#
 # @param name
 #   Name of the user.
 #
@@ -172,6 +176,7 @@ define accounts::user(
   Optional[String] $forward_source                          = undef,
   Optional[Pattern[/^absent$|^\d{4}-\d{2}-\d{2}$/]] $expiry = undef,
   Optional[String] $sshkey_custom_path                      = undef,
+  String[Pattern[/^\d{4}$]] $sshkey_mode                    = '0600'
 ) {
 
   if $home {
@@ -315,6 +320,7 @@ define accounts::user(
           sshkeys            => $sshkeys,
           sshkey_owner       => $sshkey_owner,
           sshkey_custom_path => $sshkey_custom_path,
+          sshkey_mode        => $sshkey_custom_path_mode,
         }
       }
       else {
