@@ -176,7 +176,7 @@ define accounts::user(
   Optional[String] $forward_source                          = undef,
   Optional[Pattern[/^absent$|^\d{4}-\d{2}-\d{2}$/]] $expiry = undef,
   Optional[String] $sshkey_custom_path                      = undef,
-  String[Pattern[/^\d{4}$]] $sshkey_mode                    = '0600'
+  String[Pattern[/^\d{4}$]] $sshkey_custom_path_mode        = '0600'
 ) {
 
   if $home {
