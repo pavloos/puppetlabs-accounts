@@ -176,7 +176,7 @@ define accounts::user(
   Optional[String] $forward_source                          = undef,
   Optional[Pattern[/^absent$|^\d{4}-\d{2}-\d{2}$/]] $expiry = undef,
   Optional[String] $sshkey_custom_path                      = undef,
-  String[Pattern[/^\d{4}$]] $sshkey_custom_path_mode        = '0600'
+  Pattern[/^\d{4}$/] $sshkey_custom_path_mode               = '0600',
 ) {
 
   if $home {
@@ -315,12 +315,12 @@ define accounts::user(
     # custom, non-home directory for the ssh keys.
       if (($sshkey_custom_path != undef) and ($ensure == 'present')) {
         accounts::key_management { "${name}_key_management":
-          user               => $sshkey_owner,
-          group              => $group,
-          sshkeys            => $sshkeys,
-          sshkey_owner       => $sshkey_owner,
-          sshkey_custom_path => $sshkey_custom_path,
-          sshkey_mode        => $sshkey_custom_path_mode,
+          user                    => $sshkey_owner,
+          group                   => $group,
+          sshkeys                 => $sshkeys,
+          sshkey_owner            => $sshkey_owner,
+          sshkey_custom_path      => $sshkey_custom_path,
+          sshkey_custom_path_mode => $sshkey_custom_path_mode,
         }
       }
       else {

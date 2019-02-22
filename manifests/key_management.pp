@@ -27,11 +27,11 @@
 define accounts::key_management(
   String $user,
   String $group,
-  Optional[String] $user_home                        = undef,
-  Array[String] $sshkeys                             = [],
-  String $sshkey_owner                               = $user,
-  Optional[String] $sshkey_custom_path               = undef,
-  String[Pattern[/^\d{4}$]] $sshkey_custom_path_mode = '0600'
+  Optional[String] $user_home                 = undef,
+  Array[String] $sshkeys                      = [],
+  String $sshkey_owner                        = $user,
+  Optional[String] $sshkey_custom_path        = undef,
+  Pattern[/^\d{4}$/] $sshkey_custom_path_mode = '0600',
 ) {
 
   if $user_home {
