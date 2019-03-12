@@ -58,23 +58,7 @@ define accounts::key_management(
     owner  => $user,
     group  => $group,
     mode   => $key_mode,
-  }
-
-  if $sshkeys != [] {
-    if $user_home {
-      $requires = [File["${user_home}/.ssh"], File[$key_file]]
-    } else {
-      $requires = [File[$key_file]]
-    }
-    $sshkeys.each |$sshkey| {
-      accounts::manage_keys { "${sshkey} for ${user}":
-        keyspec   => $sshkey,
-        user      => $user,
-        key_owner => $sshkey_owner,
-        key_file  => $key_file,
-        require   => $requires,
-      }
-    }
+    content => inline_template("<% @sshkeys.sort.each do |key| %><%= key %>\n<% end %>"),
   }
 
 }
